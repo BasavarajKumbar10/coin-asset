@@ -1,3 +1,6 @@
+import {IGetAssetsAction} from "./interfaces";
+import {ICoinAssets} from "../../repositories/models/CoinAssets";
+
 const assetActionPrefix = 'asset/';
 
 export const AssetActions = {
@@ -6,11 +9,8 @@ export const AssetActions = {
     GET_ASSETS_FAILURE: `${assetActionPrefix}GET_ASSETS_FAILURE`,
 }
 
-export const getAssets = (currency,
-                   order,
-                   limit,
-                   page,
-                   sparkline) => {
+export const getAssets = (currency: string, order: string, limit: number, page: number, sparkline: boolean):
+    IGetAssetsAction => {
     return {
         type: AssetActions.GET_ASSETS,
         payload: {
@@ -23,16 +23,16 @@ export const getAssets = (currency,
     }
 }
 
-export const getAssetsSuccess = (response) => {
+export const getAssetsSuccess = (response: ICoinAssets[]) => {
     return {
         type: AssetActions.GET_ASSETS_SUCCESS,
         payload: response,
     }
 }
 
-export const getAssetsFailure = (response) => {
+export const getAssetsFailure = (error: string) => {
     return {
         type: AssetActions.GET_ASSETS_FAILURE,
-        payload: response,
+        payload: error,
     }
 }

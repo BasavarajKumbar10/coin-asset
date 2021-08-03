@@ -4,8 +4,8 @@ import {
     createStore,
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import appReducer from './reducers.js'
-import appSaga from './sagas.js'
+import appReducer from './reducers.ts'
+import appSaga from './sagas.ts'
 
 export const configureStore = () => {
     // Redux configurations
@@ -18,10 +18,9 @@ export const configureStore = () => {
 
     // Assemble Middleware
     enhancers.push(applyMiddleware(...middleware));
-    const store = createStore(
-        appReducer,
-        applyMiddleware(sagaMiddleware)
-    )
+
+    const composeEnhancers = (__DEV__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+    const store = createStore(appReducer, composeEnhancers(...enhancers));
     sagaMiddleware.run(appSaga)
 
     return store;

@@ -1,12 +1,19 @@
 import {AssetActions} from "./actions";
+import {ICoinAssets} from "../../repositories/models/CoinAssets";
 
-const initialState = {
+export interface IAssetsState {
+    assetsList: ICoinAssets[];
+    isLoading: boolean;
+    apiError: string;
+}
+
+const initialState: IAssetsState = {
     assetsList: [],
     isLoading: false,
     apiError: '',
 }
 
-export const assetReducer = (state = initialState, action) => {
+export const assetReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case AssetActions.GET_ASSETS:
             return {
@@ -17,7 +24,7 @@ export const assetReducer = (state = initialState, action) => {
 
         case AssetActions.GET_ASSETS_SUCCESS:
             return {
-                ...this.state,
+                ...state,
                 // TODO handle pagination
                 assetsList: action.payload,
                 isLoading: false,
@@ -25,7 +32,7 @@ export const assetReducer = (state = initialState, action) => {
 
         case AssetActions.GET_ASSETS_FAILURE:
             return {
-                ...this.state,
+                ...state,
                 apiError: action.payload,
             }
 
