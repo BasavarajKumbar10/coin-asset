@@ -1,8 +1,8 @@
 import { watchCoinAssets } from './coinAssets/saga';
 import { all } from 'redux-saga/effects';
 
-export default function* rootSaga(): any {
+export default function* rootSaga() {
     yield all([
-        watchCoinAssets
+        watchCoinAssets(),
     ]);
 }

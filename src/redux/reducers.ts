@@ -5,6 +5,6 @@ const appReducer = combineReducers({
     coinAssets: assetReducer,
 });
 
-export default (state: any, action: any) => {
+export default (state, action) => {
     return appReducer(state, action);
 };
