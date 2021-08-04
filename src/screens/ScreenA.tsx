@@ -1,13 +1,37 @@
 import React from "react";
 
-import {SafeAreaView, Text, View} from "react-native";
+import { Button, SafeAreaView, Text, View } from "react-native";
 import { StyleSheet } from "react-native";
 import CoinsListContainer from "../components/containers/CoinsListContainer";
+import FilterImage from '../components/atoms/FilterImage';
+import { screenNames } from './screens';
+import { CoinListItem } from '../components/organisms/CoinListItem';
 
-export default function ScreenA() {
+interface IProps {
+    navigation: any;
+}
+export default function ScreenA(props: IProps) {
+    const { navigation } = props;
+
+    const openScreenB = () => navigation.navigate(screenNames.screenB);
+
+    React.useLayoutEffect(() => {
+        props.navigation.setOptions({
+            headerRight: () => (
+                <FilterImage onPress={openScreenB}/>
+            ),
+        });
+    }, [navigation]);
+
+    const renderItem = ({ item }) => {
+        return (
+            <CoinListItem item={item} />
+        )};
+
+
     return (
         <SafeAreaView style={styles.container}>
-            <CoinsListContainer />
+            <CoinsListContainer renderItem={renderItem} />
         </SafeAreaView>
     )
 }

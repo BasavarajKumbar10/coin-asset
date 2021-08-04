@@ -12,6 +12,8 @@ import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
 import { CoinListItem } from "../organisms/CoinListItem";
+import { COIN_ASSETS_LIMIT, CURRENCY, ORDER } from '../../constants/AppConfigs';
+import ApiError from '../molecules/ApiError';
 
 interface IProps {
     getCoinAssets:
@@ -19,6 +21,7 @@ interface IProps {
     coinAssetsList: ICoinAssets[];
     isLoading: boolean;
     apiError: string;
+    renderItem: ({ item }) => React.ReactElement;
 }
 
 export const mapDispatchToProps = (dispatch: any) => {
@@ -37,18 +40,20 @@ export const mapStateToProps = (state: IAppState) => {
 };
 
 function CoinsListContainer(props: IProps) {
-    const { coinAssetsList, getCoinAssets, apiError, isLoading } = props;
+    const { coinAssetsList, getCoinAssets, apiError, isLoading, renderItem } = props;
 
     useEffect(() => {
-        getCoinAssets('inr', 'market_cap_desc', 10, 1, false);
+        getCoinAssets(CURRENCY, ORDER, COIN_ASSETS_LIMIT, 1, false);
     }, []);
-    
-    const renderItem = ({ item }) => {
-        return (
-        <CoinListItem item={item} />
-      )};
+
 
     const keyExtractor = (item: ICoinAssets) => item.id;
+
+    if(!isLoading && apiError) {
+        return (
+            <ApiError />
+        );
+    };
 
     return (
         <View style={styles.container}>

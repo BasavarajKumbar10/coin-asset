@@ -1,28 +1,37 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
+import { addFixedDecimals } from '../../utils/NumberUtils';
 
 interface IProps {
   item: ICoinAssets;
 }
 
 export function CoinListItem(props: IProps) {
-  const { name, id, image, current_price, symbol } = props.item;
+  const { name, id, image, current_price, symbol, price_change_percentage_24h } = props.item;
   return (
-    <View style={styles.item} key={id}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: image,
-        }}
-      />
-      <View style={styles.titleAndSubtextt}>
-        <Text style={styles.title}>{name}</Text>
-        <Text
-          style={styles.subtext}
-        >{`${current_price} ${symbol.toUpperCase()}`}</Text>
+      <View style={styles.item} key={id}>
+        <View style={styles.left}>
+          <Image
+              style={styles.image}
+              source={{
+                uri: image,
+              }}
+          />
+          <View style={styles.titleAndSubtextt}>
+            <Text style={styles.title}>{name}</Text>
+            <Text
+                style={styles.subtext}
+            >{`${current_price?.toFixed(3)} ${symbol.toUpperCase()}`}</Text>
+          </View>
+        </View>
+        <View style={styles.priceAndChange}>
+          <Text style={styles.price}>{addFixedDecimals(current_price)}</Text>
+          <Text
+              style={styles.change}
+          >{`${addFixedDecimals(price_change_percentage_24h)}`}</Text>
+        </View>
       </View>
-    </View>
   );
 }
 
@@ -35,6 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-between"
   },
   title: {
     fontSize: 16,
@@ -53,4 +63,22 @@ const styles = StyleSheet.create({
   titleAndSubtextt: {
     paddingHorizontal: 10,
   },
+  priceAndChange: {
+
+  },
+  price: {
+    color: '#000',
+    fontWeight: "900",
+    fontSize: 16,
+    textAlign: "right"
+  },
+  change: {
+    marginTop: 6,
+    color: "green",
+    textAlign: "right"
+  },
+  left: {
+    display: "flex",
+    flexDirection: "row",
+  }
 });
