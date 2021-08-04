@@ -43,7 +43,7 @@ export const mapStateToProps = (state: IAppState) => {
 };
 
 function UserSelectedCoinsListContainer(props: IProps) {
-    const { coinAssetsList, getCoinAssets, apiError, isLoading, filtersList } = props;
+    const {coinAssetsList, getCoinAssets, apiError, isLoading, filtersList} = props;
 
     // states
     const [userSelectedCoins, setUserSelectedCoins] = useState([] as ICoinAssets[]);
@@ -63,11 +63,11 @@ function UserSelectedCoinsListContainer(props: IProps) {
     }, []);
 
     useEffect(function processData() {
-        if(!isLoading && coinAssetsList) {
+        if ( !isLoading && coinAssetsList ) {
             const selectedCoins: ICoinAssets[] = [];
             coinAssetsList.forEach((item) => {
                 filtersList.forEach((selected) => {
-                    if(selected === item.symbol) {
+                    if ( selected === item.symbol ) {
                         selectedCoins.push(item);
                     }
                 });
@@ -80,28 +80,29 @@ function UserSelectedCoinsListContainer(props: IProps) {
     const keyExtractor = (item: ICoinAssets) => item.id;
 
     // @ts-ignore
-    const renderItem = ({ item }) => {
+    const renderItem = ({item}) => {
         return (
-            <CoinListItem item={item} />
-        )};
-
-    if(!isLoading && apiError) {
-        return (
-            <ApiError />
-        );
+            <CoinListItem item={item}/>
+        )
     };
 
-    if(!isLoading && userSelectedCoins.length === 0) {
-        return <EmptyMessage message={DISPLAY_MESSAGES.noWatchlist} />
+    if ( !isLoading && apiError ) {
+        return (
+            <ApiError/>
+        );
+    }
+    ;
+
+    if ( !isLoading && userSelectedCoins.length === 0 ) {
+        return <EmptyMessage message={DISPLAY_MESSAGES.noWatchlist}/>
     }
     return (
         <View style={styles.container}>
-            {isLoading ? <ISpinner /> :
-                <FlatList
-                    data={userSelectedCoins}
-                    renderItem={renderItem}
-                    keyExtractor={keyExtractor}
-                />}
+            <FlatList
+                data={userSelectedCoins}
+                renderItem={renderItem}
+                keyExtractor={keyExtractor}
+            />
         </View>
     )
 }
