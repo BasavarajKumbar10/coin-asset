@@ -7,12 +7,13 @@ import {
     isCoinAssetsErrorSelector,
     isCoinAssetsLoadingSelector
 } from "../../redux/coinAssets/selector";
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import { IAppState } from "../../redux/reduxStateInterface";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
 import { CoinListItem } from "../organisms/CoinListItem";
 import { COIN_ASSETS_LIMIT, CURRENCY, ORDER } from '../../constants/AppConfigs';
 import ApiError from '../molecules/ApiError';
+import { DISPLAY_MESSAGES } from '../../constants/UserDisplayConstants';
 
 interface IProps {
     getCoinAssets:
@@ -78,6 +79,9 @@ function UserSelectedCoinsListContainer(props: IProps) {
         );
     };
 
+    if(!isLoading && userSelectedCoins.length === 0) {
+        return <Text style={styles.noWatchlist}>{DISPLAY_MESSAGES.noWatchlist}</Text>
+    }
     return (
         <View style={styles.container}>
             {isLoading ? <ActivityIndicator size="large" /> :
@@ -94,6 +98,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    noWatchlist: {
+        fontSize: 20,
+        fontWeight: "600",
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserSelectedCoinsListContainer);

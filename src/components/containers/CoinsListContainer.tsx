@@ -43,6 +43,7 @@ function CoinsListContainer(props: IProps) {
     const { coinAssetsList, getCoinAssets, apiError, isLoading, renderItem } = props;
 
     useEffect(() => {
+        // TODO pagination
         getCoinAssets(CURRENCY, ORDER, COIN_ASSETS_LIMIT, 1, false);
     }, []);
 
