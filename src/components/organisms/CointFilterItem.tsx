@@ -1,7 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
-import { addFixedDecimals } from '../../utils/NumberUtils';
 import ISwitch from '../atoms/ISwitch';
 
 interface IProps {
@@ -10,7 +9,7 @@ interface IProps {
     isEnabled: boolean;
 }
 
-export function CoinFilterItem(props: IProps) {
+function CoinFilterItem(props: IProps) {
     const { onChange, item, isEnabled } = props;
     const { name, image, symbol } = item;
 
@@ -33,6 +32,8 @@ export function CoinFilterItem(props: IProps) {
         </View>
     );
 }
+
+export default memo(CoinFilterItem);
 
 const styles = StyleSheet.create({
     item: {

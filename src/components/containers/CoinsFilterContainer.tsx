@@ -4,17 +4,17 @@ import { updateFilters } from '../../redux/coinAssets/actions';
 import { getFiltersListSelector } from "../../redux/coinAssets/selector";
 import { IAppState } from "../../redux/reduxStateInterface";
 import CoinsListContainer from './CoinsListContainer';
-import { CoinFilterItem } from '../organisms/CointFilterItem';
+import CoinFilterItem from '../organisms/CointFilterItem';
 
 interface IProps {
-    updateFilters:
+    updateFiltersList:
         (filters: string[]) => void;
     filtersList: string[];
 }
 
 export const mapDispatchToProps = (dispatch: any) => {
     return {
-        updateFilters:  (filters: string[]) =>
+        updateFiltersList:  (filters: string[]) =>
             dispatch(updateFilters(filters)),
     };
 };
@@ -26,7 +26,7 @@ export const mapStateToProps = (state: IAppState) => {
 };
 
 function CoinsFilterContainer(props: IProps) {
-    const { updateFilters, filtersList } = props;
+    const { updateFiltersList, filtersList } = props;
 
     const updateUserSelection = useCallback((isEnabled: boolean, symbol: string) => {
         let updatedFilter;
@@ -35,7 +35,7 @@ function CoinsFilterContainer(props: IProps) {
         } else {
             updatedFilter = filtersList.filter((coin: string) => coin !== symbol);
         }
-        updateFilters(updatedFilter);
+        updateFiltersList(updatedFilter);
     }, [filtersList])
 
     const isSelected = (symbol: string) => {
@@ -43,6 +43,7 @@ function CoinsFilterContainer(props: IProps) {
         return found !== undefined;
     };
 
+    // @ts-ignore
     const renderItem = ({ item }) => {
         const isEnabled = isSelected(item.symbol);
         return (

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { connect } from 'react-redux';
 import { getAssets } from '../../redux/coinAssets/actions';
 import {
@@ -6,12 +6,9 @@ import {
     isCoinAssetsErrorSelector,
     isCoinAssetsLoadingSelector
 } from "../../redux/coinAssets/selector";
-import {ActivityIndicator, FlatList, SafeAreaView, StatusBar, Text} from "react-native";
-import {IAppState} from "../../redux/reduxStateInterface";
-import { StyleSheet } from "react-native";
-import { View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { IAppState } from "../../redux/reduxStateInterface";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
-import { CoinListItem } from "../organisms/CoinListItem";
 import { COIN_ASSETS_LIMIT, CURRENCY, ORDER } from '../../constants/AppConfigs';
 import ApiError from '../molecules/ApiError';
 
@@ -21,6 +18,7 @@ interface IProps {
     coinAssetsList: ICoinAssets[];
     isLoading: boolean;
     apiError: string;
+    // @ts-ignore
     renderItem: ({ item }) => React.ReactElement;
 }
 

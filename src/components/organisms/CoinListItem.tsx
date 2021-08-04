@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
 import { addFixedDecimals } from '../../utils/NumberUtils';
@@ -7,7 +7,7 @@ interface IProps {
   item: ICoinAssets;
 }
 
-export function CoinListItem(props: IProps) {
+function CoinListItem(props: IProps) {
   const { name, image, current_price, symbol, price_change_percentage_24h } = props.item;
   return (
       <View style={styles.item} >
@@ -34,6 +34,8 @@ export function CoinListItem(props: IProps) {
       </View>
   );
 }
+
+export default memo(CoinListItem);
 
 const styles = StyleSheet.create({
   item: {

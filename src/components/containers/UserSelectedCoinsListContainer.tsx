@@ -7,13 +7,15 @@ import {
     isCoinAssetsErrorSelector,
     isCoinAssetsLoadingSelector
 } from "../../redux/coinAssets/selector";
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { IAppState } from "../../redux/reduxStateInterface";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
-import { CoinListItem } from "../organisms/CoinListItem";
-import { COIN_ASSETS_LIMIT, CURRENCY, ORDER } from '../../constants/AppConfigs';
+import CoinListItem from "../organisms/CoinListItem";
+import { COIN_ASSETS_LIMIT, CURRENCY, ORDER, POLL_INTERVAL } from '../../constants/AppConfigs';
 import ApiError from '../molecules/ApiError';
 import { DISPLAY_MESSAGES } from '../../constants/UserDisplayConstants';
+import ISpinner from '../atoms/ISpinner';
+import EmptyMessage from '../molecules/EmptyMessage';
 
 interface IProps {
     getCoinAssets:
@@ -46,9 +48,18 @@ function UserSelectedCoinsListContainer(props: IProps) {
     // states
     const [userSelectedCoins, setUserSelectedCoins] = useState([] as ICoinAssets[]);
 
-    // hooks
-    useEffect(() => {
+    const getData = () => {
         getCoinAssets(CURRENCY, ORDER, COIN_ASSETS_LIMIT, 1, false);
+    }
+
+    // hooks
+    useEffect(function onMount() {
+        // refresh data for every 30sec
+        const poll = setInterval(getData, POLL_INTERVAL);
+
+        return () => {
+            clearInterval(poll);
+        }
     }, []);
 
     useEffect(function processData() {
@@ -68,6 +79,7 @@ function UserSelectedCoinsListContainer(props: IProps) {
 
     const keyExtractor = (item: ICoinAssets) => item.id;
 
+    // @ts-ignore
     const renderItem = ({ item }) => {
         return (
             <CoinListItem item={item} />
@@ -80,11 +92,11 @@ function UserSelectedCoinsListContainer(props: IProps) {
     };
 
     if(!isLoading && userSelectedCoins.length === 0) {
-        return <Text style={styles.noWatchlist}>{DISPLAY_MESSAGES.noWatchlist}</Text>
+        return <EmptyMessage message={DISPLAY_MESSAGES.noWatchlist} />
     }
     return (
         <View style={styles.container}>
-            {isLoading ? <ActivityIndicator size="large" /> :
+            {isLoading ? <ISpinner /> :
                 <FlatList
                     data={userSelectedCoins}
                     renderItem={renderItem}
