@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
-import images from '../../assets';
-import { Image, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Switch } from 'react-native';
 
 interface IProps {
-    onPress: () => void;
+    onChange: (isEnabled: boolean) => void;
+    isEnabled: boolean;
 }
 
 export default function (props: IProps) {
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const { onChange, isEnabled } = props;
 
     return (
         <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            trackColor={{ false: "#767577", true: "#736df8" }}
+            thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
+            onValueChange={onChange}
             value={isEnabled}
         />
     )

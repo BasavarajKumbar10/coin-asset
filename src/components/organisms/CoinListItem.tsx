@@ -8,9 +8,9 @@ interface IProps {
 }
 
 export function CoinListItem(props: IProps) {
-  const { name, id, image, current_price, symbol, price_change_percentage_24h } = props.item;
+  const { name, image, current_price, symbol, price_change_percentage_24h } = props.item;
   return (
-      <View style={styles.item} key={id}>
+      <View style={styles.item} >
         <View style={styles.left}>
           <Image
               style={styles.image}

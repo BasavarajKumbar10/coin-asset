@@ -1,19 +1,13 @@
 import React from "react";
 
 import { SafeAreaView, StyleSheet } from "react-native";
-import CoinsListContainer from '../components/containers/CoinsListContainer';
-import { CoinFilterItem } from '../components/organisms/CointFilterItem';
+import CoinsFilterContainer from '../components/containers/CoinsFilterContainer';
 
 export default function ScreenB() {
-    const renderItem = ({ item }) => {
-        return (
-            <CoinFilterItem item={item} />
-        )};
-
 
     return (
         <SafeAreaView style={styles.container}>
-            <CoinsListContainer renderItem={renderItem} />
+            <CoinsFilterContainer />
         </SafeAreaView>
     )
 }

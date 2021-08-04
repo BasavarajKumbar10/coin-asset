@@ -2,15 +2,24 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { ICoinAssets } from "../../repositories/models/CoinAssets";
 import { addFixedDecimals } from '../../utils/NumberUtils';
+import ISwitch from '../atoms/ISwitch';
 
 interface IProps {
     item: ICoinAssets;
+    onChange: (isEnabled: boolean, symbol: string) => void;
+    isEnabled: boolean;
 }
 
 export function CoinFilterItem(props: IProps) {
-    const { name, id, image, current_price, symbol, price_change_percentage_24h } = props.item;
+    const { onChange, item, isEnabled } = props;
+    const { name, image, symbol } = item;
+
+    const updateSelection = (isEnabled: boolean) => {
+        onChange(isEnabled, symbol);
+    }
+
     return (
-        <View style={styles.item} key={id}>
+        <View style={styles.item}>
             <View style={styles.left}>
                 <Image
                     style={styles.image}
@@ -20,8 +29,7 @@ export function CoinFilterItem(props: IProps) {
                 />
                 <Text style={styles.title}>{name}</Text>
             </View>
-            <View style={styles.switchHolder}>
-            </View>
+            <ISwitch onChange={updateSelection} isEnabled={isEnabled}/>
         </View>
     );
 }
@@ -29,21 +37,25 @@ export function CoinFilterItem(props: IProps) {
 const styles = StyleSheet.create({
     item: {
         backgroundColor: "#fff",
-        padding: 20,
+        padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: 6,
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: 'grey'
     },
     title: {
         fontSize: 16,
         fontWeight: "700",
+        marginLeft: 10,
     },
     image: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
     },
     left: {
         display: "flex",

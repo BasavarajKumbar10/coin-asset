@@ -5,12 +5,14 @@ export interface IAssetsState {
     assetsList: ICoinAssets[];
     isLoading: boolean;
     apiError: string;
+    filters: string[];
 }
 
 const initialState: IAssetsState = {
     assetsList: [],
     isLoading: false,
     apiError: '',
+    filters: [],
 }
 
 export const assetReducer = (state = initialState, action: any) => {
@@ -20,7 +22,7 @@ export const assetReducer = (state = initialState, action: any) => {
                 ...state,
                 isLoading: true,
                 apiError: '',
-            }
+            };
 
         case AssetActions.GET_ASSETS_SUCCESS:
             return {
@@ -28,13 +30,19 @@ export const assetReducer = (state = initialState, action: any) => {
                 // TODO handle pagination
                 assetsList: action.payload,
                 isLoading: false,
-            }
+            };
 
         case AssetActions.GET_ASSETS_FAILURE:
             return {
                 ...state,
                 apiError: action.payload,
-            }
+            };
+
+        case AssetActions.UPDATE_FILTER:
+            return {
+                ...state,
+                filters: action.payload,
+            };
 
         default:
             return state

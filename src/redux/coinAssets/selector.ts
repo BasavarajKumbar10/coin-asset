@@ -23,3 +23,10 @@ export const isCoinAssetsErrorSelector = (state: IAppState): string => {
     }
     return state.coinAssets.apiError;
 }
+
+export const getFiltersListSelector = (state: IAppState): string[] => {
+    if(isStateUndefined(state)) {
+        return [];
+    }
+    return state.coinAssets.filters;
+}

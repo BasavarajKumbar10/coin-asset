@@ -7,6 +7,9 @@ export const AssetActions = {
     GET_ASSETS: `${assetActionPrefix}GET_ASSETS`,
     GET_ASSETS_SUCCESS: `${assetActionPrefix}GET_ASSETS_SUCCESS`,
     GET_ASSETS_FAILURE: `${assetActionPrefix}GET_ASSETS_FAILURE`,
+
+    UPDATE_FILTER: `${assetActionPrefix}UPDATE_FILTER`,
+
 }
 
 export const getAssets = (currency: string, order: string, limit: number, page: number, sparkline: boolean):
@@ -34,5 +37,13 @@ export const getAssetsFailure = (error: string) => {
     return {
         type: AssetActions.GET_ASSETS_FAILURE,
         payload: error,
+    }
+}
+
+
+export const updateFilters = (filters: string[]) => {
+    return {
+        type: AssetActions.UPDATE_FILTER,
+        payload: filters,
     }
 }
