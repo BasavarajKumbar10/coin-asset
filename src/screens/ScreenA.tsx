@@ -1,11 +1,9 @@
 import React from "react";
 
-import { Button, SafeAreaView, Text, View } from "react-native";
-import { StyleSheet } from "react-native";
-import CoinsListContainer from "../components/containers/CoinsListContainer";
+import { SafeAreaView, StyleSheet } from "react-native";
 import FilterImage from '../components/atoms/FilterImage';
 import { screenNames } from './screens';
-import { CoinListItem } from '../components/organisms/CoinListItem';
+import UserSelectedCoinsListContainer from '../components/containers/UserSelectedCoinsListContainer';
 
 interface IProps {
     navigation: any;
@@ -23,15 +21,9 @@ export default function ScreenA(props: IProps) {
         });
     }, [navigation]);
 
-    const renderItem = ({ item }) => {
-        return (
-            <CoinListItem item={item} />
-        )};
-
-
     return (
         <SafeAreaView style={styles.container}>
-            <CoinsListContainer renderItem={renderItem} />
+            <UserSelectedCoinsListContainer />
         </SafeAreaView>
     )
 }
